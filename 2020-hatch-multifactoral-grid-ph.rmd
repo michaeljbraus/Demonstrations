@@ -1,0 +1,142 @@
+---
+title: "2020-03-12-hatch-multifactoral-grid-ph"
+author: "Michael J. Braus"
+date: "`r Sys.Date()`"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: 2
+    number_sections: false
+---
+
+\fontsize{12}{14}
+\selectfont{}
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.path = 'output-rmd/', echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(dev="png", dpi=300)
+```
+
+## Soil pH Values
+
+### Wisconsin 
+
+```{r wisc-stand-sim-soil-ph}
+q1 <- qplot(data = dat.wisc, x = Lab.CO2.pH, y = High.CO2.pH, color = Water.Soil.Ratio, shape = Water.Soil.Ratio) + geom_point(size=2) +
+  theme_bw() + geom_smooth(method = "glm") + 
+  geom_abline(slope = 1, intercept = 0, color = "black") + 
+  labs(color='Solution-to-Soil \n Ratio by Mass', 
+       x = "pH of Extract at 0.04% carbon dioxide", 
+       y = "pH of Extract at 2.2% carbon dioxide")  + 
+  ggtitle("Cross-Wisconsin Soil pH Gradient")
+q1
+```
+
+```{r wisc-stand-sim-soil-ph-rsq}
+dat.wisc.one2one <- subset(dat.wisc, Water.Soil.Ratio=="1-to-1")
+lm.dat.wisc.one2one <- lm(dat.wisc.one2one$High.CO2.pH ~ dat.wisc.one2one$Lab.CO2.pH)
+summary(lm.dat.wisc.one2one)
+dat.wisc.one2two <- subset(dat.wisc, Water.Soil.Ratio=="1-to-2")
+lm.dat.wisc.one2two <- lm(dat.wisc.one2two$High.CO2.pH ~ dat.wisc.one2two$Lab.CO2.pH)
+summary(lm.dat.wisc.one2two)
+dat.wisc.one2three <- subset(dat.wisc, Water.Soil.Ratio=="1-to-3")
+lm.dat.wisc.one2three <- lm(dat.wisc.one2three$High.CO2.pH ~ dat.wisc.one2three$Lab.CO2.pH)
+summary(lm.dat.wisc.one2three)
+dat.wisc.one2four <- subset(dat.wisc, Water.Soil.Ratio=="1-to-4")
+lm.dat.wisc.one2four <- lm(dat.wisc.one2four$High.CO2.pH ~ dat.wisc.one2four$Lab.CO2.pH)
+summary(lm.dat.wisc.one2four)
+```
+
+```{r wisc-stand-sim-soil-hplus}
+q2 <- qplot(data = dat.wisc, x = 10^-Lab.CO2.pH, y = 10^-High.CO2.pH, color = Water.Soil.Ratio, shape = Water.Soil.Ratio) + geom_point(size=2) + scale_x_continuous(limits = c(10^-8.1, 10^-4.8)) + scale_y_continuous(limits = c(10^-8.1, 10^-4.8)) + theme_bw() + geom_smooth(method = "glm") + geom_abline(slope = 1, intercept = 0, color = "black")+
+  labs(color='Solution-to-Soil \n Ratio by Mass', 
+       x = "a(H+)[M] of Extract at 0.04% carbon dioxide", 
+       y = "a(H+)[M] of Extract at 2.2% carbon dioxide") + 
+  ggtitle("Cross-Wisconsin Soil pH Gradient")
+q2
+```
+
+```{r wisc-stand-sim-soil-hplus-rsq}
+dat.wisc$Lab.CO2.pH.exp <- 10^-dat.wisc$Lab.CO2.pH
+dat.wisc$High.CO2.pH.exp <- 10^-dat.wisc$High.CO2.pH
+dat.wisc.exp.one2one <- subset(dat.wisc, Water.Soil.Ratio=="1-to-1")
+lm.exp.dat.wisc.exp.one2one <- lm(dat.wisc.exp.one2one$High.CO2.pH.exp ~ dat.wisc.exp.one2one$Lab.CO2.pH.exp)
+summary(lm.exp.dat.wisc.exp.one2one)
+dat.wisc.exp.one2two <- subset(dat.wisc, Water.Soil.Ratio=="1-to-2")
+lm.exp.dat.wisc.exp.one2two <- lm(dat.wisc.exp.one2two$High.CO2.pH.exp ~ dat.wisc.exp.one2two$Lab.CO2.pH.exp)
+summary(lm.exp.dat.wisc.exp.one2two)
+dat.wisc.exp.one2three <- subset(dat.wisc, Water.Soil.Ratio=="1-to-3")
+lm.exp.dat.wisc.exp.one2three <- lm(dat.wisc.exp.one2three$High.CO2.pH.exp ~ dat.wisc.exp.one2three$Lab.CO2.pH.exp)
+summary(lm.exp.dat.wisc.exp.one2three)
+dat.wisc.exp.one2four <- subset(dat.wisc, Water.Soil.Ratio=="1-to-4")
+lm.exp.dat.wisc.exp.one2four <- lm(dat.wisc.exp.one2four$High.CO2.pH.exp ~ dat.wisc.exp.one2four$Lab.CO2.pH.exp)
+summary(lm.exp.dat.wisc.exp.one2four)
+```
+
+### Spooner
+
+```{r subset-spooner}
+dat.spooner <- subset(dat, Study=="Spooner")
+```
+
+```{r spooner-stand-sim-soil-ph}
+q3 <- qplot(data = dat.spooner, x = Lab.CO2.pH, y = High.CO2.pH, color = Water.Soil.Ratio, shape = Water.Soil.Ratio) + geom_point(size=2) +
+  theme_bw() + geom_smooth(method = "glm") + 
+  geom_abline(slope = 1, intercept = 0, color = "black") + 
+  labs(color='Solution-to-Soil \n Ratio by Mass', 
+       x = "pH of Extract at 0.04% carbon dioxide", 
+       y = "pH of Extract at 2.2% carbon dioxide")  + 
+  ggtitle("Long-term Soil pH Manipulation")
+q3
+```
+
+```{r spooner-stand-sim-soil-ph-rsq}
+dat.spooner.one2one <- subset(dat.spooner, Water.Soil.Ratio=="1-to-1")
+lm.dat.spooner.one2one <- lm(dat.spooner.one2one$High.CO2.pH ~ dat.spooner.one2one$Lab.CO2.pH)
+summary(lm.dat.spooner.one2one)
+dat.spooner.one2two <- subset(dat.spooner, Water.Soil.Ratio=="1-to-2")
+lm.dat.spooner.one2two <- lm(dat.spooner.one2two$High.CO2.pH ~ dat.spooner.one2two$Lab.CO2.pH)
+summary(lm.dat.spooner.one2two)
+dat.spooner.one2three <- subset(dat.spooner, Water.Soil.Ratio=="1-to-3")
+lm.dat.spooner.one2three <- lm(dat.spooner.one2three$High.CO2.pH ~ dat.spooner.one2three$Lab.CO2.pH)
+summary(lm.dat.spooner.one2three)
+dat.spooner.one2four <- subset(dat.spooner, Water.Soil.Ratio=="1-to-4")
+lm.dat.spooner.one2four <- lm(dat.spooner.one2four$High.CO2.pH ~ dat.spooner.one2four$Lab.CO2.pH)
+summary(lm.dat.spooner.one2four)
+```
+
+```{r spooner-stand-sim-soil-hplus}
+q4 <- qplot(data = dat.spooner, x = 10^-Lab.CO2.pH, y = 10^-High.CO2.pH, color = Water.Soil.Ratio, shape = Water.Soil.Ratio) + geom_point(size=2) + scale_x_continuous(limits = c(10^-8.1, 10^-4.8)) + scale_y_continuous(limits = c(10^-8.1, 10^-4.8)) + theme_bw() + geom_smooth(method = "glm") + geom_abline(slope = 1, intercept = 0, color = "black")+
+  labs(color='Solution-to-Soil \n Ratio by Mass', 
+       x = "a(H+)[M] of Extract at 0.04% carbon dioxide", 
+       y = "a(H+)[M] of Extract at 2.2% carbon dioxide") + 
+  ggtitle("Long-term Soil pH Manipulation")
+q4
+```
+
+```{r spooner-stand-sim-soil-hplus-rsq}
+dat.spooner$Lab.CO2.pH.exp <- 10^-dat.spooner$Lab.CO2.pH
+dat.spooner$High.CO2.pH.exp <- 10^-dat.spooner$High.CO2.pH
+dat.spooner.exp.one2one <- subset(dat.spooner, Water.Soil.Ratio=="1-to-1")
+lm.exp.dat.spooner.exp.one2one <- lm(dat.spooner.exp.one2one$High.CO2.pH.exp ~ dat.spooner.exp.one2one$Lab.CO2.pH.exp)
+summary(lm.exp.dat.spooner.exp.one2one)
+dat.spooner.exp.one2two <- subset(dat.spooner, Water.Soil.Ratio=="1-to-2")
+lm.exp.dat.spooner.exp.one2two <- lm(dat.spooner.exp.one2two$High.CO2.pH.exp ~ dat.spooner.exp.one2two$Lab.CO2.pH.exp)
+summary(lm.exp.dat.spooner.exp.one2two)
+dat.spooner.exp.one2three <- subset(dat.spooner, Water.Soil.Ratio=="1-to-3")
+lm.exp.dat.spooner.exp.one2three <- lm(dat.spooner.exp.one2three$High.CO2.pH.exp ~ dat.spooner.exp.one2three$Lab.CO2.pH.exp)
+summary(lm.exp.dat.spooner.exp.one2three)
+dat.spooner.exp.one2four <- subset(dat.spooner, Water.Soil.Ratio=="1-to-4")
+lm.exp.dat.spooner.exp.one2four <- lm(dat.spooner.exp.one2four$High.CO2.pH.exp ~ dat.spooner.exp.one2four$Lab.CO2.pH.exp)
+summary(lm.exp.dat.spooner.exp.one2four)
+```
+
+### Grid of Multifactorial Plots
+
+```{r multifactoral-grid-ph, fig.width=10, fig.height=7}
+plot_grid(q3, q4, q1, q2) 
+```

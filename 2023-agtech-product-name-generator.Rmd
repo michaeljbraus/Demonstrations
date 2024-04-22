@@ -1,0 +1,135 @@
+---
+title: ""
+author: ""
+date: "2023-06-21"
+output: pdf_document
+---
+
+\fontfamily{lmss}
+\fontsize{10}{10}
+\selectfont
+
+__AgTech Product Name Generator (Exploratory Design)__
+
+MJB - 2023-06-21
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(stringi)
+```
+
+\tableofcontents
+
+---
+
+Stipulations: 
+
+* Approx. 3 syllables
+* Model the form "ceria"
+* Try the suffix "-bact"
+* Product lists a person can read through but not overwhelm
+
+A person can peruse the lists and maybe find the right *de novo* product name, but they could also simply be inspired to come up with good names that the market and customers would enjoy. 
+
+Each time this script is run, it takes a couple seconds and generates all-new lists (in PDF form). This is amenable to revision and refining to get generations of name/brand ideas closer to what would be the most appropriate product names for AgTech products. 
+
+\newpage
+
+### consonant+vowel+consonant+vowel+consonant+vowel
+
+This should generate 3-syllable words of the simplest "consonant+vowel" form. We'll make 900 iterations, which is on the low-end of possibilities, and then bump it up to bigger numbers later when we find the sweet spot. 
+
+```{r}
+sprintf("%s%s%s%s%s%s", 
+        stri_rand_strings(900, 1, '[BCDFGHJKLMNPQRSTVWXYZ]'),
+        stri_rand_strings(900, 1, '[AEIOU]'),
+        stri_rand_strings(900, 1, '[BCDFGHJKLMNPQRSTVWXYZ]'),
+        stri_rand_strings(900, 1, '[AEIOU]'),
+        stri_rand_strings(900, 1, '[BCDFGHJKLMNPQRSTVWXYZ]'),
+        stri_rand_strings(900, 1, '[AEIOU]'))
+```
+
+\newpage
+
+### vowel+consonant+vowel+consonant+vowel+consonant
+
+Now we can generate 3-syllable words of the other simplest form "vowel+consonant". 
+
+```{r}
+sprintf("%s%s%s%s%s%s", 
+        stri_rand_strings(900, 1, '[AEIOU]'),
+        stri_rand_strings(900, 1, '[BCDFGHJKLMNPQRSTVWXYZ]'),
+        stri_rand_strings(900, 1, '[AEIOU]'),
+        stri_rand_strings(900, 1, '[BCDFGHJKLMNPQRSTVWXYZ]'),
+        stri_rand_strings(900, 1, '[AEIOU]'),
+        stri_rand_strings(900, 1, '[BCDFGHJKLMNPQRSTVWXYZ]'))
+```
+
+\newpage
+
+\newpage
+
+### vowel+consonant+vowel+consonant+vowel
+
+Now let's generate 3-syllable words of the other simplest form "vowel+consonant" again but leave off the consonant on the end. 
+
+```{r}
+sprintf("%s%s%s%s%s", 
+        stri_rand_strings(900, 1, '[AEIOU]'),
+        stri_rand_strings(900, 1, '[BCDFGHJKLMNPQRSTVWXYZ]'),
+        stri_rand_strings(900, 1, '[AEIOU]'),
+        stri_rand_strings(900, 1, '[BCDFGHJKLMNPQRSTVWXYZ]'),
+        stri_rand_strings(900, 1, '[AEIOU]'))
+```
+
+\newpage
+
+### consonant+vowel+consonant+consonant+vowel+vowel
+
+Let's get a little freaky and limit the consonants and vowels a little to get closer to what we might want at each letter. 
+
+```{r}
+sprintf("%s%s%s%s%s%s", 
+        stri_rand_strings(900, 1, '[CDGHJKLMNPRSTVWZ]'),
+        stri_rand_strings(900, 1, '[AEIOU]'),
+        stri_rand_strings(900, 1, '[BCDFGHKLMNPRSTVWXYZ]'),
+        stri_rand_strings(900, 1, '[BCDFGHKLMNPRSTVWXYZ]'),
+        stri_rand_strings(900, 1, '[AEO]'),
+        stri_rand_strings(900, 1, '[AEO]'))
+```
+
+
+\newpage
+
+### consonant+vowel+consonant+consonant+I+A
+
+What if we just use "IA" at the end of the previous word form? 
+
+```{r}
+sprintf("%s%s%s%s%s%s", 
+        stri_rand_strings(900, 1, '[CDGHJKLMNPRSTVWZ]'),
+        stri_rand_strings(900, 1, '[AEIOU]'),
+        stri_rand_strings(900, 1, '[BCDFGHKLMNPRSTVWXYZ]'),
+        stri_rand_strings(900, 1, '[BCDFGHKLMNPRSTVWXYZ]'),
+        stri_rand_strings(900, 1, '[I]'),
+        stri_rand_strings(900, 1, '[A]'))
+```
+
+\newpage
+
+### consonant+vowel+consonant+consonant+B+A+C+T
+
+Let's add "BACT" to the end of C+A+C+A words and see what happens. 
+
+```{r}
+sprintf("%s%s%s%s%s%s%s%s", 
+        stri_rand_strings(900, 1, '[CDGHJKLMNPRSTVWZ]'),
+        stri_rand_strings(900, 1, '[AEIOU]'),
+        stri_rand_strings(900, 1, '[BCDFGHKLMNPRSTVWXYZ]'),
+        stri_rand_strings(900, 1, '[AEIOU]'),
+        stri_rand_strings(900, 1, '[B]'),
+        stri_rand_strings(900, 1, '[A]'),
+        stri_rand_strings(900, 1, '[C]'),
+        stri_rand_strings(900, 1, '[T]'))
+```
+

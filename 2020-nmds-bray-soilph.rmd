@@ -1,0 +1,47 @@
+---
+title: "2020-03-12-nmds-bray-soilph-Lab.CO2.pH.one2one"
+author: "Michael J. Braus"
+date: "`r Sys.Date()`"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: 2
+    number_sections: false
+---
+
+\fontsize{12}{14}
+\selectfont{}
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.path = 'output-rmd/', echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(dev="png", dpi=300)
+```
+
+
+## Acidity Values
+
+### Diversity Plots
+
+```{r nmds-bray-soilph-Lab.CO2.pH.one2one-both-studies, fig.height=4, fig.width=6}
+ps.ord.nmds = ordinate(ps.norm, "NMDS", "bray", trymax=1000, k=3)
+p = plot_ordination(ps.norm, ps.ord.nmds, type="samples")
+palette = brewer.pal(8, "Spectral")
+p = p + aes(colour=Lab.CO2.pH.one2one, shape=Study) + geom_point(size=3) + 
+  scale_colour_gradientn(colors=palette) + 
+  theme_bw()
+p
+```
+
+```{r nmds-bray-soilph-Lab.CO2.pH.one2one, fig.height=4, fig.width=9}
+ps.ord.nmds = ordinate(ps.norm, "NMDS", "bray",trymax=1000,k=3)
+p = plot_ordination(ps.norm, ps.ord.nmds, type="samples")
+palette = brewer.pal(8, "Spectral")
+p = p + aes(colour=Lab.CO2.pH.one2one) + geom_point(size=3) + 
+  scale_colour_gradientn(colors=palette) + facet_wrap(~Study) + 
+  theme_bw()
+p
+```
